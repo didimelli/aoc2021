@@ -1,12 +1,13 @@
-mod day1;
-
+pub mod day1 {
+    pub fn return1() -> u32 {
+        return 1;
+    }
+}
 #[cfg(test)]
 mod tests {
     use crate::day1::day1::return1;
     #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
+    fn actually_returns1() {
         assert_eq!(return1(), 1);
     }
 }
