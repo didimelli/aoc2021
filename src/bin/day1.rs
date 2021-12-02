@@ -46,6 +46,7 @@ fn part_one_works() {
         7
     );
 }
+
 #[test]
 fn part_two_works() {
     assert_eq!(
