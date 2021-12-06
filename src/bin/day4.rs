@@ -1,10 +1,10 @@
 fn main() {
     let (drawn, mut boards) = parse_input("src/bin/day4_input.txt");
     println!("Result for part one is: {}", part_one(&drawn, &mut boards));
-    // println!("Result for part two is: {}", part_two(&input));
+    println!("Result for part two is: {}", part_two(&drawn, &mut boards));
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 struct Board {
     // numbers: Vec<Number>,
     values: [u32; 25],
@@ -150,6 +150,32 @@ fn part_one(drawn: &Vec<u32>, boards: &mut Vec<Board>) -> u32 {
     sum * winning_number.unwrap()
 }
 
+fn part_two(drawn: &Vec<u32>, boards: &mut Vec<Board>) -> u32 {
+    let mut winning_boards: Vec<Board> = vec![];
+    let mut winning_sum: Vec<u32> = vec![];
+    let mut winning_number: Vec<u32> = vec![];
+    let total_boards = boards.len();
+    'outer: for d in drawn {
+        for board in &mut *boards {
+            // if number is in board, tick it as drawn!
+            board.new_drawn(*d);
+            // check if board is winning
+            if board.winning.is_none() {
+                // check this board only if it not winning already
+                if board.is_board_winning() {
+                    winning_boards.push(*board);
+                    winning_sum.push(board.get_unmarked_sum());
+                    winning_number.push(*d);
+                }
+            }
+            if winning_boards.len() == total_boards {
+                break 'outer;
+            }
+        }
+    }
+    winning_sum.last().unwrap() * winning_number.last().unwrap()
+}
+
 fn parse_input(filename: &str) -> (Vec<u32>, Vec<Board>) {
     //(Vec<u32>, Vec<Board>) {
     use std::fs;
@@ -174,10 +200,8 @@ fn part_one_works() {
     assert_eq!(part_one(&drawn, &mut boards), 4512);
 }
 
-// #[test]
-// fn part_two_works() {
-//     assert_eq!(
-//         part_two(&vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263]),
-//         5
-//     );
-// }
+#[test]
+fn part_two_works() {
+    let (drawn, mut boards) = parse_input("src/bin/day4_example.txt");
+    assert_eq!(part_two(&drawn, &mut boards), 1924);
+}
