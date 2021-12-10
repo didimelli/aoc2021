@@ -1,0 +1,26 @@
+fn main() {
+    let input = parse_input("src/bin/{name}_input.txt");
+    println!("Result for part one is: {}", part_one(&input));
+    println!("Result for part two is: {}", part_two(&input));
+}
+
+fn parse_input(filename: &str) {
+    use std::fs;
+    let content = fs::read_to_string(filename).expect("Something wrong reading the file");
+}
+
+fn part_one() {}
+
+fn part_two() {}
+
+#[test]
+fn part_one_works() {
+    let input = parse_input("src/bin/{name}_example.txt");
+    assert_eq!(part_one(&input), 7);
+}
+
+#[test]
+fn part_two_works() {
+    let input = parse_input("src/bin/{name}_example.txt");
+    assert_eq!(part_two(&input), 5);
+}
