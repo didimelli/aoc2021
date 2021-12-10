@@ -5,6 +5,9 @@ from typer import Abort
 from typer import echo
 from typer import run
 
+# TODO: For string template
+# check this https://docs.python.org/3/library/string.html#string.Template
+
 
 def new(name: str) -> None:
     bin = Path("src/bin/")
